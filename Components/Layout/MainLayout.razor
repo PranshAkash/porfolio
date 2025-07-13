@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page" style="min-height: 100vh; display: flex; flex-direction: column;">
+    <header class="navbar">
+        <nav class="container">
+            <NavMenu />
+        </nav>
+    </header>
+
+    <main class="main-content" style="flex: 1;">
+        @Body
+    </main>
+
+    <footer class="footer section" style="background-color: #0f172a; color: white; text-align: center; padding: 2rem 0; margin-top: auto;">
+        <div class="container">
+            <p>&copy; 2025 Akash Singh. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

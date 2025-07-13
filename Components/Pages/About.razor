@@ -1,0 +1,206 @@
+@page "/about"
+@inject IPortfolioService PortfolioService
+
+@{
+    var personalInfo = PortfolioService.GetPersonalInfo();
+    var education = PortfolioService.GetEducation();
+}
+
+<!-- About Hero Section -->
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="animate-fade-in-up">About Me</h1>
+            <p class="text-secondary animate-fade-in-up">Get to know more about my journey and background</p>
+        </div>
+        
+        <div class="grid grid-2 align-items-center">
+            <div class="animate-fade-in-up">
+                <img src="@personalInfo.ProfileImage" alt="@personalInfo.Name" class="profile-image" style="width: 100%; max-width: 400px; height: auto;" />
+            </div>
+            
+            <div class="animate-fade-in-up">
+                <h2 class="mb-4">@personalInfo.Name</h2>
+                <h4 class="text-primary mb-3">@personalInfo.Title</h4>
+                <p class="mb-4">@personalInfo.Summary</p>
+                
+                <div class="contact-info mb-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-envelope text-primary me-3"></i>
+                        <span>@personalInfo.Email</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-phone text-primary me-3"></i>
+                        <span>@personalInfo.Phone</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                        <span>@personalInfo.Location</span>
+                    </div>
+                </div>
+                
+                <a href="/contact" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    Let's Work Together
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Professional Journey Section -->
+<section class="section section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>My Professional Journey</h2>
+            <p class="text-secondary">Continuous learning and growth in software development</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card text-center">
+                <div class="mb-3">
+                    <i class="fas fa-graduation-cap text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4>Education</h4>
+                <p>Diploma in Information Technology from CSJM Govt. Polytechnic with strong foundation in programming and system design.</p>
+            </div>
+            
+            <div class="card text-center">
+                <div class="mb-3">
+                    <i class="fas fa-code text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4>Development</h4>
+                <p>5.6+ years of hands-on experience in full-stack development using modern technologies and best practices.</p>
+            </div>
+            
+            <div class="card text-center">
+                <div class="mb-3">
+                    <i class="fas fa-rocket text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4>Innovation</h4>
+                <p>Passionate about integrating AI components and deploying scalable solutions using cloud technologies.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Education</h2>
+            <p class="text-secondary">Academic background and qualifications</p>
+        </div>
+        
+        <div class="timeline">
+            @foreach (var edu in education.OrderByDescending(e => e.EndDate))
+            {
+                <div class="timeline-item">
+                    <div class="timeline-date">@edu.EndDate.Year</div>
+                    <h4 class="timeline-title">@edu.Degree</h4>
+                    <div class="timeline-company">@edu.Institution</div>
+                    <p class="text-secondary">@edu.Location</p>
+                    @if (!string.IsNullOrEmpty(edu.Percentage))
+                    {
+                        <p><strong>Grade:</strong> @edu.Percentage</p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Achievements Section -->
+<section class="section section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Achievements & Recognition</h2>
+            <p class="text-secondary">Milestones and accomplishments in my career</p>
+        </div>
+        
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-trophy text-primary me-3" style="font-size: 2rem;"></i>
+                    <h5 class="mb-0">Event Organizer</h5>
+                </div>
+                <p>Organized technical and cultural fests, demonstrating leadership and project management skills.</p>
+            </div>
+            
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-medal text-primary me-3" style="font-size: 2rem;"></i>
+                    <h5 class="mb-0">Sports & Drama Competitions</h5>
+                </div>
+                <p>Winner in school-level sports and drama competitions, showcasing teamwork and creativity.</p>
+            </div>
+            
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-users text-primary me-3" style="font-size: 2rem;"></i>
+                    <h5 class="mb-0">Mentorship</h5>
+                </div>
+                <p>Praised for rapid learning and mentoring juniors on .NET stack and development best practices.</p>
+            </div>
+            
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-star text-primary me-3" style="font-size: 2rem;"></i>
+                    <h5 class="mb-0">Client Satisfaction</h5>
+                </div>
+                <p>Consistently delivered high-quality solutions resulting in 100% client satisfaction and repeat business.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>My Core Values</h2>
+            <p class="text-secondary">The principles that guide my work and life</p>
+        </div>
+        
+        <div class="grid grid-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <i class="fas fa-lightbulb text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5>Innovation</h5>
+                <p class="text-secondary">Always exploring new technologies and creative solutions to complex problems.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="mb-3">
+                    <i class="fas fa-handshake text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5>Collaboration</h5>
+                <p class="text-secondary">Believing in the power of teamwork and knowledge sharing for better outcomes.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="mb-3">
+                    <i class="fas fa-target text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5>Excellence</h5>
+                <p class="text-secondary">Committed to delivering high-quality, clean, and maintainable code.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="mb-3">
+                    <i class="fas fa-book text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5>Learning</h5>
+                <p class="text-secondary">Continuously learning and adapting to stay current with industry trends.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .text-primary { color: var(--primary-color) !important; }
+    .text-secondary { color: var(--text-secondary) !important; }
+    .me-3 { margin-right: 1rem; }
+    .mb-0 { margin-bottom: 0; }
+</style>

@@ -1,0 +1,305 @@
+@page "/projects"
+@inject IPortfolioService PortfolioService
+
+@{
+    var projects = PortfolioService.GetProjects();
+}
+
+<!-- Projects Hero Section -->
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="animate-fade-in-up">My Projects</h1>
+            <p class="text-secondary animate-fade-in-up">A showcase of my work and technical achievements</p>
+        </div>
+    </div>
+</section>
+
+<!-- Project Statistics -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-4 text-center mb-5">
+            <div class="card">
+                <h3 class="text-primary mb-2">@projects.Count</h3>
+                <p class="mb-0">Total Projects</p>
+            </div>
+            <div class="card">
+                <h3 class="text-primary mb-2">@projects.SelectMany(p => p.Technologies).Distinct().Count()</h3>
+                <p class="mb-0">Technologies Used</p>
+            </div>
+            <div class="card">
+                <h3 class="text-primary mb-2">5.6+</h3>
+                <p class="mb-0">Years of Development</p>
+            </div>
+            <div class="card">
+                <h3 class="text-primary mb-2">100%</h3>
+                <p class="mb-0">Success Rate</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="section section-alt">
+    <div class="container">
+        <div class="grid grid-2">
+            @foreach (var project in projects)
+            {
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="project-content">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h3 class="project-title">@project.Title</h3>
+                            <span class="project-date">@project.StartDate.Year@(project.EndDate.HasValue ? $" - {project.EndDate.Value.Year}" : " - Present")</span>
+                        </div>
+                        
+                        <p class="project-description">@project.Description</p>
+                        
+                        @if (project.KeyFeatures.Any())
+                        {
+                            <div class="mb-3">
+                                <h6 class="text-primary mb-2">Key Features:</h6>
+                                <ul class="feature-list">
+                                    @foreach (var feature in project.KeyFeatures.Take(4))
+                                    {
+                                        <li>@feature</li>
+                                    }
+                                    @if (project.KeyFeatures.Count > 4)
+                                    {
+                                        <li class="text-secondary">And @(project.KeyFeatures.Count - 4) more features...</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        
+                        <div class="project-technologies mb-3">
+                            <h6 class="text-primary mb-2">Technologies:</h6>
+                            <div class="tech-tags">
+                                @foreach (var tech in project.Technologies)
+                                {
+                                    <span class="tech-tag">@tech</span>
+                                }
+                            </div>
+                        </div>
+                        
+                        <div class="project-links">
+                            @if (!string.IsNullOrEmpty(project.GitHubUrl))
+                            {
+                                <a href="@project.GitHubUrl" class="btn btn-outline btn-sm" target="_blank">
+                                    <i class="fab fa-github"></i>
+                                    GitHub
+                                </a>
+                            }
+                            @if (!string.IsNullOrEmpty(project.LiveUrl))
+                            {
+                                <a href="@project.LiveUrl" class="btn btn-primary btn-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Live Demo
+                                </a>
+                            }
+                            @if (string.IsNullOrEmpty(project.GitHubUrl) && string.IsNullOrEmpty(project.LiveUrl))
+                            {
+                                <span class="btn btn-outline btn-sm" style="opacity: 0.6; cursor: not-allowed;">
+                                    <i class="fas fa-lock"></i>
+                                    Private Project
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Technologies Overview -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Technologies Used Across Projects</h2>
+            <p class="text-secondary">The tech stack that powers my solutions</p>
+        </div>
+        
+        @{
+            var allTech = projects.SelectMany(p => p.Technologies).GroupBy(t => t).OrderByDescending(g => g.Count()).ToList();
+            var categories = new Dictionary<string, List<string>>
+            {
+                ["Backend"] = new List<string> { ".NET Core", "ASP.NET MVC", "ASP.NET Core", "C#", "Entity Framework Core", "Entity Framework" },
+                ["Frontend"] = new List<string> { "React", "ReactJS", "NextJS", "JavaScript", "TypeScript", "HTML", "CSS", "Bootstrap", "jQuery", "Ajax" },
+                ["Database"] = new List<string> { "MS SQL", "MSSQL", "SQL Server", "MySQL", "Azure SQL Database" },
+                ["DevOps & Cloud"] = new List<string> { "Docker", "Kubernetes", "Azure DevOps", "Azure", "TFS" },
+                ["Integration"] = new List<string> { "REST API", "RESTful APIs", "JSON", "Webhooks", "Windows Services" },
+                ["Tools"] = new List<string> { "Revit", "Git", "GitHub", "Bitbucket", "Jira" }
+            };
+        }
+        
+        <div class="grid grid-3">
+            @foreach (var category in categories)
+            {
+                var categoryTech = allTech.Where(t => category.Value.Contains(t.Key)).ToList();
+                if (categoryTech.Any())
+                {
+                    <div class="card">
+                        <h4 class="text-primary mb-3">@category.Key</h4>
+                        <div class="tech-tags">
+                            @foreach (var tech in categoryTech)
+                            {
+                                <span class="tech-tag-large">
+                                    @tech.Key
+                                    <span class="tech-count">@tech.Count()</span>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Project Approach -->
+<section class="section section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>My Development Approach</h2>
+            <p class="text-secondary">How I tackle projects from concept to deployment</p>
+        </div>
+        
+        <div class="grid grid-4">
+            <div class="approach-step">
+                <div class="step-number">1</div>
+                <h5>Planning & Analysis</h5>
+                <p>Understanding requirements, analyzing user needs, and designing system architecture.</p>
+            </div>
+            
+            <div class="approach-step">
+                <div class="step-number">2</div>
+                <h5>Design & Prototyping</h5>
+                <p>Creating wireframes, database schemas, and API specifications before development.</p>
+            </div>
+            
+            <div class="approach-step">
+                <div class="step-number">3</div>
+                <h5>Development & Testing</h5>
+                <p>Implementing features with clean code, comprehensive testing, and continuous integration.</p>
+            </div>
+            
+            <div class="approach-step">
+                <div class="step-number">4</div>
+                <h5>Deployment & Maintenance</h5>
+                <p>Deploying to production, monitoring performance, and providing ongoing support.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .text-primary { color: var(--primary-color) !important; }
+    .text-secondary { color: var(--text-secondary) !important; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-3 { margin-bottom: 1rem; }
+    
+    .project-date {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .feature-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+    
+    .feature-list li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+        font-size: 0.9rem;
+    }
+    
+    .feature-list li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+    
+    .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .tech-tag {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .tech-tag-large {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .tech-count {
+        background: var(--primary-color);
+        color: white;
+        padding: 0.1rem 0.5rem;
+        border-radius: 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .approach-step {
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .step-number {
+        width: 4rem;
+        height: 4rem;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 auto 1rem auto;
+    }
+    
+    .approach-step h5 {
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+    
+    .approach-step p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+</style>

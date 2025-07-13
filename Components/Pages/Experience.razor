@@ -1,0 +1,392 @@
+@page "/experience"
+@inject IPortfolioService PortfolioService
+
+@{
+    var experiences = PortfolioService.GetExperiences();
+}
+
+<!-- Experience Hero Section -->
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="animate-fade-in-up">Professional Experience</h1>
+            <p class="text-secondary animate-fade-in-up">My career journey and key achievements</p>
+        </div>
+        <div class="text-center mb-5">
+            <h1 class="animate-fade-in-up">Professional Experience</h1>
+            <p class="text-secondary animate-fade-in-up">My journey in software development and key accomplishments</p>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Timeline -->
+<section class="section">
+    <div class="container">
+        <div class="timeline">
+            @foreach (var experience in experiences.OrderByDescending(e => e.StartDate))
+            {
+                <div class="timeline-item">
+                    <div class="timeline-date">@experience.Duration</div>
+                    <h3 class="timeline-title">@experience.JobTitle</h3>
+                    <div class="timeline-company">@experience.Company</div>
+                    <p class="text-secondary mb-3">
+                        <i class="fas fa-map-marker-alt"></i> @experience.Location
+                    </p>
+                    
+                    @if (experience.Responsibilities.Any())
+                    {
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">Key Responsibilities</h5>
+                            <ul class="experience-list">
+                                @foreach (var responsibility in experience.Responsibilities)
+                                {
+                                    <li>@responsibility</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    
+                    @if (experience.Achievements.Any())
+                    {
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">Key Achievements</h5>
+                            <ul class="experience-list">
+                                @foreach (var achievement in experience.Achievements)
+                                {
+                                    <li>@achievement</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    
+                    @if (experience.Technologies.Any())
+                    {
+                        <div class="mb-3">
+                            <h6 class="text-primary mb-2">Technologies Used</h6>
+                            <div class="tech-tags">
+                                @foreach (var tech in experience.Technologies)
+                                {
+                                    <span class="tech-tag">@tech</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Skills Gained Section -->
+<section class="section section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Skills Gained Through Experience</h2>
+            <p class="text-secondary">Technical and soft skills developed throughout my career</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title text-primary">
+                        <i class="fas fa-code me-2"></i>
+                        Technical Skills
+                    </h4>
+                </div>
+                <ul class="skills-list">
+                    <li>Full-stack web development</li>
+                    <li>API design and integration</li>
+                    <li>Database design and optimization</li>
+                    <li>Cloud deployment and DevOps</li>
+                    <li>AI/ML integration</li>
+                    <li>Performance optimization</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title text-primary">
+                        <i class="fas fa-users me-2"></i>
+                        Leadership Skills
+                    </h4>
+                </div>
+                <ul class="skills-list">
+                    <li>Team collaboration</li>
+                    <li>Project management</li>
+                    <li>Mentoring junior developers</li>
+                    <li>Cross-functional communication</li>
+                    <li>Client relationship management</li>
+                    <li>Agile development practices</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title text-primary">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        Problem Solving
+                    </h4>
+                </div>
+                <ul class="skills-list">
+                    <li>Complex system design</li>
+                    <li>Performance troubleshooting</li>
+                    <li>Architecture optimization</li>
+                    <li>Data migration strategies</li>
+                    <li>Security implementation</li>
+                    <li>Scalability planning</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Projects Impact -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Impact & Results</h2>
+            <p class="text-secondary">Measurable outcomes from my work experience</p>
+        </div>
+        
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="impact-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1">Efficiency Improvement</h4>
+                        <p class="text-secondary mb-0">Increased Certificate Renewal workflow efficiency by 30% through automation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="impact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1">Client Satisfaction</h4>
+                        <p class="text-secondary mb-0">Delivered multiple projects across incentive and rebate management domains</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="impact-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1">System Integration</h4>
+                        <p class="text-secondary mb-0">Successfully integrated APIs, Webhooks, and third-party services</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="impact-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1">Platform Development</h4>
+                        <p class="text-secondary mb-0">Built comprehensive platforms from e-commerce to health management systems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Career Progression -->
+<section class="section section-alt">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Career Progression</h2>
+            <p class="text-secondary">Growth and development over the years</p>
+        </div>
+        
+        <div class="progression-timeline">
+            <div class="progression-item">
+                <div class="progression-year">2019</div>
+                <div class="progression-content">
+                    <h5>Started as Software Developer</h5>
+                    <p>Began journey at Channel Fusion, focusing on .NET Core and web development</p>
+                </div>
+            </div>
+            
+            <div class="progression-item">
+                <div class="progression-year">2020</div>
+                <div class="progression-content">
+                    <h5>Full-Stack Development</h5>
+                    <p>Expanded skills to include React, advanced database design, and API development</p>
+                </div>
+            </div>
+            
+            <div class="progression-item">
+                <div class="progression-year">2021</div>
+                <div class="progression-content">
+                    <h5>E-commerce Expertise</h5>
+                    <p>Led development of comprehensive e-commerce platform with admin/vendor portals</p>
+                </div>
+            </div>
+            
+            <div class="progression-item">
+                <div class="progression-year">2022</div>
+                <div class="progression-content">
+                    <h5>System Integration</h5>
+                    <p>Specialized in API integrations, data transformation, and external service connections</p>
+                </div>
+            </div>
+            
+            <div class="progression-item">
+                <div class="progression-year">2023</div>
+                <div class="progression-content">
+                    <h5>DevOps & Cloud</h5>
+                    <p>Mastered Docker, Kubernetes, and cloud deployment strategies</p>
+                </div>
+            </div>
+            
+            <div class="progression-item">
+                <div class="progression-year">2024</div>
+                <div class="progression-content">
+                    <h5>AI Integration</h5>
+                    <p>Incorporated AI components and Large Language Models into development workflow</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .text-primary { color: var(--primary-color) !important; }
+    .text-secondary { color: var(--text-secondary) !important; }
+    .me-2 { margin-right: 0.5rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    
+    .experience-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .experience-list li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+    }
+    
+    .experience-list li::before {
+        content: '▸';
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+    
+    .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .tech-tag {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .skills-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .skills-list li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.5;
+    }
+    
+    .skills-list li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--success-color);
+        font-weight: bold;
+    }
+    
+    .impact-icon {
+        width: 4rem;
+        height: 4rem;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+    
+    .progression-timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .progression-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: var(--bg-primary);
+        border-radius: 1rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+    }
+    
+    .progression-year {
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem;
+        border-radius: 50%;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-right: 2rem;
+        flex-shrink: 0;
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .progression-content h5 {
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+    
+    .progression-content p {
+        margin-bottom: 0;
+        color: var(--text-secondary);
+    }
+    
+    @@media (max-width: 768px) {
+        .progression-item {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .progression-year {
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+    }
+</style>
